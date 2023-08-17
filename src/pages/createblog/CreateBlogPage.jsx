@@ -28,7 +28,7 @@ const CreateBlogPage = () => {
 		onSubmit: async (values, { resetForm }) => {
 			try {
 				const response = await axios.post(
-					"https://backend-mern-blogsite.onrender.com/create-blog",
+					"https://backend-mern-blogsite.onrender.com/api/v1/create-blog",
 					{ ...values }
 				);
 				const data = response.data;

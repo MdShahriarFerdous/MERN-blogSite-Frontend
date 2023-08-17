@@ -21,7 +21,7 @@ const UserBlogPage = () => {
 		const userData = async () => {
 			try {
 				const response = await axios.get(
-					`https://backend-mern-blogsite.onrender.com/user-details/${id}`
+					`https://backend-mern-blogsite.onrender.com/api/v1/user-details/${id}`
 				);
 				const data = await response.data;
 				console.log(data);
@@ -65,7 +65,7 @@ const UserBlogPage = () => {
 			}).then(async (result) => {
 				if (result.isConfirmed) {
 					const deleteBlog = await axios.delete(
-						`https://backend-mern-blogsite.onrender.com/delete-blog/${id}`
+						`https://backend-mern-blogsite.onrender.com/api/v1/delete-blog/${id}`
 					);
 					const deletedData = deleteBlog.data;
 					setDeleteId(id);

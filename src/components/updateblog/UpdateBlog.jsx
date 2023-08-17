@@ -32,7 +32,7 @@ const UpdateBlog = () => {
 		onSubmit: async (values, { resetForm }) => {
 			try {
 				const updateBlog = await axios.put(
-					`https://backend-mern-blogsite.onrender.com/update-blog/${id}`,
+					`https://backend-mern-blogsite.onrender.com/update-blog/api/v1/${id}`,
 					{ ...values }
 				);
 				const updateData = updateBlog.data;

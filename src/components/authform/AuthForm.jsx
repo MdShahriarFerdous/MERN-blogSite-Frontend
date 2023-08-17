@@ -32,7 +32,7 @@ const AuthForm = () => {
 			const sendRequest = async (type = "login") => {
 				const response = await axios
 					.post(
-						`https://backend-mern-blogsite.onrender.com/${type}`,
+						`https://backend-mern-blogsite.onrender.com/api/v1/${type}`,
 						{
 							...values,
 						}

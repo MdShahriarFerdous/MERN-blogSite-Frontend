@@ -21,7 +21,7 @@ const BlogByIdPage = () => {
 
 		try {
 			const response = await axios.post(
-				`https://backend-mern-blogsite.onrender.com/blogs/comments/${id}`,
+				`https://backend-mern-blogsite.onrender.com/api/v1/blogs/comments/${id}`,
 				newComment
 			);
 

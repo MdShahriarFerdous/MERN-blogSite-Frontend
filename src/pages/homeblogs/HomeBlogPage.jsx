@@ -15,7 +15,7 @@ const HomeBlogPage = () => {
 		const requestData = async () => {
 			try {
 				const response = await axios.get(
-					"https://backend-mern-blogsite.onrender.com/blogs"
+					"https://backend-mern-blogsite.onrender.com/api/v1/blogs"
 				);
 				const data = response.data;
 				// console.log(data);
@@ -32,7 +32,7 @@ const HomeBlogPage = () => {
 		try {
 			const keyword = event.target.value;
 			const searchResponse = await axios.get(
-				`https://backend-mern-blogsite.onrender.com/blogSearch/${keyword}`
+				`https://backend-mern-blogsite.onrender.com/api/v1/blogSearch/${keyword}`
 			);
 			const result = await searchResponse.data;
 			setSearchData(result);
