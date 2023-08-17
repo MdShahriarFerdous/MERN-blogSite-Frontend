@@ -1,0 +1,9 @@
+.delete,
+.edit {
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
+}
+.edit {
+	margin-right: 24px;
+}

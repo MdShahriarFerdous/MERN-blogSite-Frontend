@@ -1,0 +1,17 @@
+.container .logo {
+	font-size: 2rem;
+	font-weight: 800;
+}
+.plus {
+	width: 16px;
+	height: 16px;
+	color: white;
+	margin-bottom: 3px;
+	margin-right: 4px;
+}
+nav .nav-link.active-link {
+	color: #b815a7;
+}
+/* nav .pending-link {
+	color: white;
+} */
