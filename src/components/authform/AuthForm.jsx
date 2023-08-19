@@ -10,6 +10,9 @@ import { login } from "../../redux/features/authSlice";
 // import ScreenLoader from "../loader/ScreenLoader";
 
 const AuthForm = () => {
+	// const forTesting = "http://localhost:8000";
+	const forDeploying = "https://backend-mern-blogsite.onrender.com";
+
 	const [isSignup, setIsSignup] = useState(false);
 	const [isCreated, setIsCreated] = useState(false);
 
@@ -31,12 +34,9 @@ const AuthForm = () => {
 			setIsCreated(true);
 			const sendRequest = async (type = "login") => {
 				const response = await axios
-					.post(
-						`https://backend-mern-blogsite.onrender.com/api/v1/${type}`,
-						{
-							...values,
-						}
-					)
+					.post(`${forDeploying}/api/v1/${type}`, {
+						...values,
+					})
 					.catch((error) => console.log(error));
 				const data = await response.data;
 				console.log(data);
@@ -55,7 +55,7 @@ const AuthForm = () => {
 				if (requestData) {
 					dispatch(login());
 					setIsCreated(false);
-					toast.success("Welcome Again!");
+					toast.success("Welcome!");
 					navigate("/blogs-feed");
 				}
 			}
@@ -145,9 +145,6 @@ const AuthForm = () => {
 					</div>
 				</form>
 			</div>
-			{/* <div style={{ display: isCreated ? "block" : "none" }}>
-				<ScreenLoader />
-			</div> */}
 		</>
 	);
 };

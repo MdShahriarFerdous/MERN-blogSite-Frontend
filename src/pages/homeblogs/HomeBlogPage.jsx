@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 
 const HomeBlogPage = () => {
+	// const forTesting = "http://localhost:8000";
+	const forDeploying = "https://backend-mern-blogsite.onrender.com";
 	const truncateString = (str, num) => {
 		if (str.length > num) return str.slice(0, num) + " .... ";
 		else return str;
@@ -15,7 +17,7 @@ const HomeBlogPage = () => {
 		const requestData = async () => {
 			try {
 				const response = await axios.get(
-					"https://backend-mern-blogsite.onrender.com/api/v1/blogs"
+					`${forDeploying}/api/v1/blogs`
 				);
 				const data = response.data;
 				// console.log(data);
@@ -32,9 +34,9 @@ const HomeBlogPage = () => {
 		try {
 			const keyword = event.target.value;
 			const searchResponse = await axios.get(
-				`https://backend-mern-blogsite.onrender.com/api/v1/blogSearch/${keyword}`
+				`${forDeploying}/api/v1/blogSearch/${keyword}`
 			);
-			const result = await searchResponse.data;
+			const result = searchResponse.data;
 			setSearchData(result);
 		} catch (error) {
 			console.log(error);
@@ -86,7 +88,7 @@ const HomeBlogPage = () => {
 									/>
 									<div className="card-body">
 										<h5 className="card-title">{title}</h5>
-										<p className="card-text">
+										<p className="card-text text-primary">
 											Publihsed By: {author.name}
 										</p>
 										<p>Date: {formattedDate}</p>

@@ -1,15 +1,32 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const BlogByIdPage = () => {
+	// const forTesting = "http://localhost:8000";
+	const forDeploying = "https://backend-mern-blogsite.onrender.com";
+	//done
 	const { id } = useParams();
 	const userId = localStorage.getItem("userId");
-	const location = useLocation();
-	const { title, name, author, content, image, formattedDate } =
-		location.state;
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [blogData, setBlogData] = useState({});
 	const [commentText, setCommentText] = useState("");
-	const [commentData, setCommentData] = useState([]);
+	const [comments, setComments] = useState([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const getBlogData = await axios.get(
+					`${forDeploying}/api/v1/blog/${id}`
+				);
+				setBlogData(getBlogData.data);
+				setComments(getBlogData.data.comments);
+			} catch (error) {
+				console.error("Error fetching blog details:", error);
+			}
+		};
+		fetchData();
+	}, [id]);
 
 	const handleCommentSubmit = async () => {
 		const newComment = {
@@ -17,29 +34,36 @@ const BlogByIdPage = () => {
 			blog: id.trim(),
 			user: userId,
 		};
-		setCommentText("");
-
 		try {
+			setIsSubmitting(true); // Set loading state
 			const response = await axios.post(
-				`https://backend-mern-blogsite.onrender.com/api/v1/blogs/comments/${id}`,
+				`${forDeploying}/api/v1/blogs/comments/${id}`,
 				newComment
 			);
 
 			const createdComment = response.data;
-			setCommentData(createdComment);
+			setComments((prevComments) => [...prevComments, createdComment]);
+			setCommentText("");
 		} catch (error) {
 			console.error("Error submitting comment:", error);
+		} finally {
+			setIsSubmitting(false); // Clear loading state
 		}
 	};
 
+	// console.log(comments);
+	// console.log(blogData);
 	return (
 		<div className="container">
 			<div className="row d-flex justify-content-center mt-5">
 				<div className="col-lg-12 ">
 					<div className="card p-4">
 						<img
-							src={image}
-							style={{ width: "100%", height: "500px" }}
+							src={blogData.image}
+							style={{
+								width: "100%",
+								height: "500px",
+							}}
 							className="img-fluid border-radius-lg"
 						/>
 
@@ -52,23 +76,74 @@ const BlogByIdPage = () => {
 							<div className="name ps-3">
 								<span>
 									<h6 className="pt-2">
-										{name ? name : author.name}
+										{blogData.author?.name ||
+											"Unknown Author"}
 									</h6>
 								</span>
 								<div className="stats">
-									<small>{formattedDate}</small>
+									<small>
+										{new Date(
+											blogData.createdAt
+										).toLocaleDateString()}
+									</small>
 								</div>
 							</div>
 						</div>
 
 						<div className="card-header">
-							<h1>{title}</h1>
+							<h1>{blogData.title}</h1>
 						</div>
 						<div className="card-body">
-							<p className="card-text">{content}</p>
+							<p className="card-text">{blogData.content}</p>
 						</div>
 					</div>
+					{/* ..................Comments.................... */}
+					{comments &&
+						comments.map((comment) => {
+							return (
+								<React.Fragment key={comment._id}>
+									<div className="row m-4">
+										<div className="col-2 mt-3">
+											<div className="author align-items-center">
+												<img
+													src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ1oLaDJlC-DvPibHvUAluSld6D4KG_Q00x6oMDubpL3K5lLeqWeKn8eUgbQ3ZiWjg6HM&usqp=CAU"
+													alt="..."
+													className="avatar shadow mt-2"
+												/>
+												<div className="name ps-3">
+													<span>
+														<h6 className="pt-2">
+															{comment?.user
+																?.name ||
+																"Unknown Author"}
+														</h6>
+													</span>
+													<div className="stats">
+														<small>
+															{new Date(
+																comment.createdAt
+															).toLocaleDateString()}
+														</small>
+													</div>
+												</div>
+											</div>
+										</div>
 
+										<div className="col-lg-9 pt-2">
+											<div className="card">
+												<div className="card-body">
+													{comment.text}
+												</div>
+											</div>
+										</div>
+									</div>
+								</React.Fragment>
+							);
+						})}
+
+					{/* ..................Comments end.................... */}
+
+					{/* separate comment box */}
 					<div className="row m-4">
 						<div className="col-1">
 							<div className="author align-items-center">
@@ -84,6 +159,7 @@ const BlogByIdPage = () => {
 							<textarea
 								className="form-control"
 								id="exampleFormControlTextarea1"
+								value={commentText}
 								rows="3"
 								onChange={(e) => {
 									setCommentText(e.target.value);
@@ -92,11 +168,13 @@ const BlogByIdPage = () => {
 							<button
 								className=" btn btn-lg bg-gradient-info mt-3"
 								onClick={handleCommentSubmit}
+								disabled={isSubmitting}
 							>
-								Comment
+								{isSubmitting ? "Submitting..." : "Comment"}
 							</button>
 						</div>
 					</div>
+					{/* ..... */}
 				</div>
 			</div>
 		</div>

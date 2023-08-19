@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const UpdateBlog = () => {
+	// const forTesting = "http://localhost:8000";
+	const forDeploying = "https://backend-mern-blogsite.onrender.com";
 	const { id } = useParams();
 	const location = useLocation();
 	const { title, content, image } = location.state;
@@ -32,7 +34,7 @@ const UpdateBlog = () => {
 		onSubmit: async (values, { resetForm }) => {
 			try {
 				const updateBlog = await axios.put(
-					`https://backend-mern-blogsite.onrender.com/update-blog/api/v1/${id}`,
+					`${forDeploying}/api/v1/update-blog/${id}`,
 					{ ...values }
 				);
 				const updateData = updateBlog.data;

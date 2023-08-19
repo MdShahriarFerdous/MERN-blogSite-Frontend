@@ -7,6 +7,9 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const CreateBlogPage = () => {
+	// const forTesting = "http://localhost:8000";
+	const forDeploying = "https://backend-mern-blogsite.onrender.com";
+
 	const navigate = useNavigate();
 	const formik = useFormik({
 		initialValues: {
@@ -28,7 +31,7 @@ const CreateBlogPage = () => {
 		onSubmit: async (values, { resetForm }) => {
 			try {
 				const response = await axios.post(
-					"https://backend-mern-blogsite.onrender.com/api/v1/create-blog",
+					`${forDeploying}/api/v1/create-blog`,
 					{ ...values }
 				);
 				const data = response.data;

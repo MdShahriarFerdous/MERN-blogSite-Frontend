@@ -7,6 +7,9 @@ import Swal from "sweetalert2";
 import "./userblog.css";
 
 const UserBlogPage = () => {
+	// const forTesting = "http://localhost:8000";
+	const forDeploying = "https://backend-mern-blogsite.onrender.com";
+
 	const id = localStorage.getItem("userId");
 	// console.log(id);
 	const [blogData, setBlogData] = useState("");
@@ -21,7 +24,7 @@ const UserBlogPage = () => {
 		const userData = async () => {
 			try {
 				const response = await axios.get(
-					`https://backend-mern-blogsite.onrender.com/api/v1/user-details/${id}`
+					`${forDeploying}/api/v1/user-details/${id}`
 				);
 				const data = await response.data;
 				console.log(data);
@@ -38,7 +41,7 @@ const UserBlogPage = () => {
 		const fetchData = async () => {
 			try {
 				const response = await axios.get(
-					`https://backend-mern-blogsite.onrender.com/api/v1/user/${id}`
+					`${forDeploying}/api/v1/user/${id}`
 				);
 				const data = await response.data.blogs;
 				console.log(data);
@@ -65,7 +68,7 @@ const UserBlogPage = () => {
 			}).then(async (result) => {
 				if (result.isConfirmed) {
 					const deleteBlog = await axios.delete(
-						`https://backend-mern-blogsite.onrender.com/api/v1/delete-blog/${id}`
+						`${forDeploying}/api/v1/delete-blog/${id}`
 					);
 					const deletedData = deleteBlog.data;
 					setDeleteId(id);
@@ -85,7 +88,7 @@ const UserBlogPage = () => {
 	};
 	return (
 		<div className="container mb-5">
-			<h1 className="m-5 text-center">{`${userData.name}'s`} BLog</h1>
+			<h1 className="m-5 text-center">{`${userData?.name}'s`} Blog</h1>
 			<div className="row gx-4 gy-5 mb-5">
 				{blogData &&
 					blogData.map((blog, index) => {
@@ -108,7 +111,7 @@ const UserBlogPage = () => {
 									<div className="card-body">
 										<h5 className="card-title">{title}</h5>
 
-										<p className="card-text">
+										<p className="card-text text-primary">
 											Published By: {name}
 										</p>
 										<p>Date: {formattedDate}</p>
