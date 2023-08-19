@@ -35,7 +35,7 @@ const BlogByIdPage = () => {
 			user: userId,
 		};
 		try {
-			setIsSubmitting(true); // Set loading state
+			setIsSubmitting(true);
 			const response = await axios.post(
 				`${forDeploying}/api/v1/blogs/comments/${id}`,
 				newComment
@@ -47,12 +47,10 @@ const BlogByIdPage = () => {
 		} catch (error) {
 			console.error("Error submitting comment:", error);
 		} finally {
-			setIsSubmitting(false); // Clear loading state
+			setIsSubmitting(false);
 		}
 	};
 
-	// console.log(comments);
-	// console.log(blogData);
 	return (
 		<div className="container">
 			<div className="row d-flex justify-content-center mt-5">
@@ -97,7 +95,7 @@ const BlogByIdPage = () => {
 							<p className="card-text">{blogData.content}</p>
 						</div>
 					</div>
-					{/* ..................Comments.................... */}
+
 					{comments &&
 						comments.map((comment) => {
 							return (
