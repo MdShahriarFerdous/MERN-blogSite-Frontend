@@ -5,7 +5,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 
 const HomeBlogPage = () => {
 	// const forTesting = "http://localhost:8000";
-	const forDeploying = "https://backend-mern-blogsite.onrender.com";
+	const forDeploying = "https://blogtime-app-shahriar.onrender.com";
 	const truncateString = (str, num) => {
 		if (str.length > num) return str.slice(0, num) + " .... ";
 		else return str;

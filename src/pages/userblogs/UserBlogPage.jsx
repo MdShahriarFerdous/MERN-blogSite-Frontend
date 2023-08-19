@@ -8,7 +8,7 @@ import "./userblog.css";
 
 const UserBlogPage = () => {
 	// const forTesting = "http://localhost:8000";
-	const forDeploying = "https://backend-mern-blogsite.onrender.com";
+	const forDeploying = "https://blogtime-app-shahriar.onrender.com";
 
 	const id = localStorage.getItem("userId");
 	// console.log(id);

@@ -11,7 +11,7 @@ import { login } from "../../redux/features/authSlice";
 
 const AuthForm = () => {
 	// const forTesting = "http://localhost:8000";
-	const forDeploying = "https://backend-mern-blogsite.onrender.com";
+	const forDeploying = "https://blogtime-app-shahriar.onrender.com";
 
 	const [isSignup, setIsSignup] = useState(false);
 	const [isCreated, setIsCreated] = useState(false);
